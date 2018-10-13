@@ -110,15 +110,11 @@ testData = pd.read_excel('shuju.xlsx', sheet_name='test')
 age 和 interest 一起放进去提升很大
 '''
 
-#去掉年龄 用途等等
-# removeFeature = [u'project', u'user', u'ID', u'recovery', u'default1', u'time', u'用途', u'thank', u'Amount', u'symbol', u'symbol2', u'lenth', u'repeat']
-# removeFeature = [u'project', u'user', u'ID', u'recovery', u'default1', u'time', u'用途', u'thank', u'Amount', u'symbol', u'lenth', u'repeat']  #0.859
-# removeFeature = [u'project', u'user', u'ID', u'recovery', u'default1', u'time', u'用途', u'thank', u'Amount', u'symbol', u'lenth', u'repeat', u'positive', u'fog'] #0.867
-# removeFeature = [u'project', u'user', u'ID', u'recovery', u'default1', u'time', u'用途', u'thank', u'Amount', u'symbol', u'lenth', u'repeat', u'positive', u'fog', u'symbol2'] # 0.69
-# removeFeature = [u'project', u'user', u'ID', u'recovery', u'default1', u'time', u'用途', u'thank', u'Amount', u'symbol', u'lenth', u'repeat', u'positive', u'fog', u'symbol2', u'purpose'] #0.875
-removeFeature = [u'project', u'user', u'ID', u'recovery', u'default1', u'time', u'用途', u'thank', u'Amount', u'symbol',u'lenth', u'repeat', u'positive', u'fog', u'symbol2', u'purpose', u'Marry']    #0.8805
-# removeFeature = [u'project', u'user', u'ID', u'recovery', u'default1', u'用途', u'time', u'thank', u'Amount', u'symbol', u'lenth', u'positive', u'fog', u'symbol2', u'purpose', u'Marry']
-# removeFeature = [u'project', u'user', u'ID', u'recovery', u'default1', u'time', u'用途']
+#去掉年龄 用途等特征 以下是经过选择的最优特征
+
+removeFeature = [u'project', u'user', u'ID', u'recovery', u'default1', u'time', u'用途', u'thank', u'Amount',
+                 u'symbol',u'lenth', u'repeat', u'positive', u'fog', u'symbol2', u'purpose', u'Marry']    #0.8805
+
 featureKeys = []
 
 keys = [u'Amount', u'Interest', u'Month', u'Credit', u'lenth', u'repeat', u'symbol',
@@ -129,7 +125,7 @@ keys = [u'Amount', u'Interest', u'Month', u'Credit', u'lenth', u'repeat', u'symb
 for key in trainData.keys():
     if key not in removeFeature:
         featureKeys.append(key)
-print featureKeys
+print featureKeys  #剩下的特征变量
 
 X = trainData[featureKeys]
 
@@ -143,10 +139,7 @@ trainX, testX, trainY, testY = train_test_split(X, Y, test_size=0.1, random_stat
 
 # print trainX.head()
 print 'train begin -------- '
-# clf = LogisticRegression(penalty='l2', C=1)
-# clf = svm.SVC(kernel='rbf', C=1.2)
-# # clf = naive_bayes.BernoulliNB()
-# # clf = linear_model.Lasso(alpha = 0.1)
+
 modelLGB(trainX, trainY, testX, testY)
 
 print 'time: ', time.time() - t
